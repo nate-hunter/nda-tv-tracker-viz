@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" href="styles.css">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Bowlby+One+SC&family=Josefin+Sans&family=Passion+One&family=Quicksand&display=swap" rel="stylesheet">
+
+    <title>NDA Tracker</title>
+</head>
+<body class="blue-grey darken-3">
+
+    <div class="nav blue-grey darken-4">
+        <div class="section center">
+            <h3 class="blue-text text-lighten-4 center">NDA Tracker</h3>
+        </div>
+    </div>
+
+    <div class="container section">
+        <div class="row">
+            <div class="col s12 l5">
+                <button data-studio="ae">A&E</button>
+                <button data-studio="cbs">CBS</button>
+                <button class="active" data-studio="discovery">Discovery</button>
+                <button data-studio="sony">Sony</button>
+                <button data-studio="fox">Twentieth Century Fox</button>
+            </div>
+            <div class="col s12 l6 push-l1">
+                <div class="canvas"></div>
+            </div>
+        </div>
+        <div class="row">
+            <form class="col m6 push-m3">
+                <p class="flow-text blue-text text-lighten-4 center">How much <span>Discovery</span> were scheduled today?</p>
+                <input type="text" class="blue-text text-lighten-2" id="discovery" placeholder="No. of Episodes">
+                <p class="center pink-text error text-lighten-1"></p>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <script src="index.js"></script>
+    <script src="graph.js"></script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+body {
+    font-family: 'Quicksand', sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Josefin Sans', sans-serif;
+}
+
+p {
+    font-family: 'Josefin Sans', sans-serif;
+}
+
+button {
+    background: #263238 !important;
+    margin-bottom: 20px;
+    width: 100%;
+    padding: 16px;
+    font-size: 1.6em;
+    color: #fff;
+    border: 0;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button.active {
+    background: #fdd835 !important;
+    color: #263238;
+}
+
+form span {
+    color: #fdd835;
+}
