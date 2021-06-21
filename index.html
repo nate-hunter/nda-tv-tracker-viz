@@ -24,9 +24,9 @@
     <div class="container section">
         <div class="row">
             <div class="col s12 l5">
-                <button data-studio="ae">A&E</button>
+                <button class="active" data-studio="ae">A&E</button>
                 <button data-studio="cbs">CBS</button>
-                <button class="active" data-studio="discovery">Discovery</button>
+                <button data-studio="discovery">Discovery</button>
                 <button data-studio="sony">Sony</button>
                 <button data-studio="fox">Twentieth Century Fox</button>
             </div>
@@ -36,12 +36,28 @@
         </div>
         <div class="row">
             <form class="col m6 push-m3">
-                <p class="flow-text blue-text text-lighten-4 center">How much <span>Discovery</span> were scheduled today?</p>
-                <input type="text" class="blue-text text-lighten-2" id="discovery" placeholder="No. of Episodes">
-                <p class="center pink-text error text-lighten-1"></p>
+                <p class="flow-text blue-text text-lighten-4 center">How much <span>A&E</span> were scheduled today?</p>
+                <p class="center blue-grey-text text-lighten-2">(Press 'Enter' to submit the episode count)</p>
+                <input type="text" class="yellow-text text-darken-1" id="ae" placeholder="No. of Episodes">
+                <p class="error center pink-text text-lighten-1"></p>
             </form>
         </div>
     </div>
+
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-firestore.js"></script>
+
+    <script>
+        // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        var firebaseConfig = {
+
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+    </script>
 
     <script src="https://d3js.org/d3.v5.min.js"></script>
     <script src="index.js"></script>
