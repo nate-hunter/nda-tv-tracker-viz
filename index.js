@@ -12,6 +12,8 @@ const handleBtnClick = (e) => {
     e.target.classList.add('active');  // Applies 'active' class to clicked studio
     input.setAttribute('id', studio);  // Updates the 'id' attr in the form's input to the clicked studio
     formStudio.textContent = studio;  // Sets the text w/in the form's input to the clicked studio
+
+    update(data);
 }
 
 const handleFormSubmit = (e) => {

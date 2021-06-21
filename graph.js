@@ -12,14 +12,14 @@ const svg = d3.select('.canvas')
 const g = svg.append('g') 
     .attr('width', graphWidth)
     .attr('height', graphHeight)
-    .attr('transfrom', `translate(${margin.left}, ${margin.top})`);
+    .attr('transform', `translate(${margin.left}, ${margin.top})`);
 
 // Scale setup:
 const x = d3.scaleTime().range([0, graphWidth]);
 const y = d3.scaleLinear().range([graphHeight, 0]);
 
 // Axis group setup:
-const xAxisGroup = g.append('g')
+const xAxisGroup = g.append('g') 
     .attr('class', 'x-axis')
     .attr('transform', `translate(0, ${graphHeight})`)
 
@@ -27,19 +27,46 @@ const yAxisGroup = g.append('g')
     .attr('class', 'y-axis')
 
 const update = (data) => {
+    data = data.filter(obj => obj.studio === studio)
+
     // Set scale domains:
     x.domain(d3.extent(data, d => new Date(d.date)));
     y.domain([0, d3.max(data, d => d.episodeCount)]);
 
+    // Create circles
+    const circles = g.selectAll('circle')
+        .data(data)
+
+    circles.exit().remove();
+
+    circles
+        .attr('cx', d => x(new Date(d.date)))
+        .attr('cy', d => y(d.episodeCount))
+
+    circles.enter()
+        .append('circle')
+            .attr('r', 4)
+            .attr('cx', d => x(new Date(d.date)))
+            .attr('cy', d => y(d.episodeCount))
+            .attr('fill', '#fffde7')
+
     // Create axis:
     const xAxis = d3.axisBottom(x)
-        .ticks(4);
+        .ticks(4)
+        .tickFormat(d3.timeFormat('%b %d'));
+
     const yAxis = d3.axisLeft(y)
-        .ticks(4);
+        .ticks(4)
+        .tickFormat(d => d + ' eps.');
 
     // Call axis:
     xAxisGroup.call(xAxis);
     yAxisGroup.call(yAxis);
+
+    // Rotates axis text:
+    xAxisGroup.selectAll('text')
+        .attr('transform', 'rotate(-40)')
+        .attr('text-anchor', 'end')
 }
 
 let data = [];
