@@ -26,12 +26,36 @@ const xAxisGroup = g.append('g')
 const yAxisGroup = g.append('g')
     .attr('class', 'y-axis')
 
+// Generate line path:
+const line = d3.line()
+    .x(d => x(new Date(d.date)))
+    .y(d => y(d.episodeCount));
+
+const path = g.append('path');
+
+// Add dotted line to hovered data point
+const dottedLineG = g.append('g')
+    .attr('class', 'dotted-lines');
+
+const xDottedLine = dottedLineG.append('line')
+const yDottedLine = dottedLineG.append('line')
+
 const update = (data) => {
-    data = data.filter(obj => obj.studio === studio)
+    data = data.filter(dataObj => dataObj.studio === studio);  // Filters data points only w/the selected studio
+    // if dataObj.studio === 'all' return dataObj  // Implement something like this to show all data points
+
+    data.sort((a, b) => new Date(a.date) - new Date(b.date));
 
     // Set scale domains:
     x.domain(d3.extent(data, d => new Date(d.date)));
     y.domain([0, d3.max(data, d => d.episodeCount)]);
+
+    // Updates 'path' data
+    path.data([data])
+        .attr('fill', 'none')
+        .attr('stroke', '#fffde7')
+        .attr('stroke-width', 2)
+        .attr('d', line)
 
     // Create circles
     const circles = g.selectAll('circle')
@@ -45,10 +69,49 @@ const update = (data) => {
 
     circles.enter()
         .append('circle')
-            .attr('r', 4)
+            .attr('r', 5)
             .attr('cx', d => x(new Date(d.date)))
             .attr('cy', d => y(d.episodeCount))
             .attr('fill', '#fffde7')
+
+    g.selectAll('circle')
+        .on('mouseover', (d, i, n) => {
+            console.log('d:', d)
+            console.log(graphHeight)
+            console.log(y(d.episodeCount))
+            d3.select(n[i])
+                .transition().duration(100)
+                    .attr('r', 8)
+                    .attr('fill', '#fff')
+            xDottedLine
+                .attr('x1', x(new Date(d.date)))
+                .attr('x2', x(new Date(d.date)))
+                .attr('y1', y(d.episodeCount))
+                .attr('y2', graphHeight)
+                .attr('stroke', "#fff59d")
+                .attr('stroke-width', 1)
+            yDottedLine 
+                .attr('x1', x(new Date(d.date)))
+                .attr('x2', 0)
+                .attr('y1', y(d.episodeCount))
+                .attr('y2', y(d.episodeCount))
+                .attr('stroke', "#fff59d")
+                .attr('stroke-width', 1)  
+            dottedLineG
+                .transition().duration(50)
+                .style('opacity', 1)
+                .style("stroke-dasharray", ("3, 3"))
+        })
+        .on('mouseleave', (d, i, n) => {
+            d3.select(n[i])
+                .transition().duration(500)
+                    .attr('r', 4)
+                    .attr('fill', '#fffde7')
+            dottedLineG
+                .transition().duration(50)
+                .style('opacity', 0)
+                .style("stroke-dasharray", ("3, 3"))
+        })
 
     // Create axis:
     const xAxis = d3.axisBottom(x)
