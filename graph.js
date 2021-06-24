@@ -53,7 +53,8 @@ const update = (data) => {
     // Updates 'path' data
     path.data([data])
         .attr('fill', 'none')
-        .attr('stroke', '#fffde7')
+        // .attr('stroke', '#fffde7')
+        .attr('stroke', '#f99595')
         .attr('stroke-width', 2)
         .attr('d', line)
 
@@ -72,7 +73,7 @@ const update = (data) => {
             .attr('r', 5)
             .attr('cx', d => x(new Date(d.date)))
             .attr('cy', d => y(d.episodeCount))
-            .attr('fill', '#fffde7')
+            .attr('fill', '#f99595')
 
     g.selectAll('circle')
         .on('mouseover', (d, i, n) => {
